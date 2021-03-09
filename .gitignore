@@ -1,0 +1,21 @@
+# Ignore bundler config.
+/.bundle
+
+# Ignore Byebug command history file.
+/.byebug_history
+
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+# Ignore editors and shells.
+/.idea/*
+*.sublime-project
+*.sublime-workspace
+*.DS_Store
+
+# vim temporary files
+*.swp
+*.swo
