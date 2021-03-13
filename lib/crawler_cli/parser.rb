@@ -5,22 +5,25 @@ module CrawlerCli
   class Parser
     class << self
       def call(url, client = HTTParty)
-        text, status, text, error = nil
-        begin
-          response = request(url, client)
-        rescue StandardError => error
-          # HTTParty::Error, Timeout::Error, SocketError etc.
-          error = error.message
-        else
-          status = response.code
-          if response.success?
-            text = content(document(response.parsed_response))
-          end
-        end
-        message(url, status, text, error)
+        error, status, text = parse(url, client)
+        message(url, error, status, text)
       end
 
       protected
+
+      def parse(url, client)
+        error, status, text = nil
+        response = request(url, client)
+        status = response.code
+        if response.success?
+          text = content(document(response.parsed_response))
+        end
+      rescue StandardError => error
+        # HTTParty::Error, Timeout::Error, SocketError etc.
+        error = error.message
+      ensure
+        return [error, status, text]
+      end
 
       def request(url, client)
         client.get(url)
@@ -34,7 +37,7 @@ module CrawlerCli
         document.xpath('//head/title')&.last&.content
       end
 
-      def message(url, status, text, error)
+      def message(url, error, status, text)
         return "URL: #{url}, Error: #{error}" if error
         return "URL: #{url}, Status: #{status}, Title: #{text}" if text
         "URL: #{url}, Status: #{status}"
