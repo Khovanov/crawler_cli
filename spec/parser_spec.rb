@@ -29,7 +29,7 @@ RSpec.describe CrawlerCli::Parser, "call" do
   end
 
   context "with client exception" do
-    let(:invalid_message) { "URL: https://vkrabota.ru, Status: StandardError, Title: " }
+    let(:invalid_message) { "URL: https://vkrabota.ru, Error: StandardError" }
 
     let(:client_with_exception) do
       client = double('Client')
