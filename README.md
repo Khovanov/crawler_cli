@@ -32,3 +32,35 @@ bundle exec rspec
 ```
 bundle exec ruby crawler_cli.rb https://vkrabota.ru https://hh.ru https://career.habr.com https://spb.rabota.ru
 ```
+## Demo for custom use
+```
+require_relative 'lib/crawler_cli'
+
+urls = %w[
+  https://vkrabota.ru
+  https://hh.ru
+  https://career.habr.com
+  https://spb.rabota.ru
+]
+
+# for class methods
+
+class CustomOne
+  extend CrawlerCli::Crawler
+
+  # any custom code
+end
+
+result = CustomOne.call(urls)
+
+# or instance methods
+
+class CustomTwo
+  include CrawlerCli::Crawler
+
+  # any custom code
+end
+
+result = CustomTwo.new.call(urls)
+
+```
