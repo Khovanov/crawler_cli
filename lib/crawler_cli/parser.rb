@@ -40,7 +40,7 @@ module CrawlerCli
 
     def message(url, error, status, text)
       return "URL: #{url}, Error: #{error}" if error
-      return "URL: #{url}, Status: #{status}, Title: #{text}" if text
+      return "URL: #{url}, Status: #{status}, Title: #{text}" if status == 200
       "URL: #{url}, Status: #{status}"
     end
   end
