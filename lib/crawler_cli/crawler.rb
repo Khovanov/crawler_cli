@@ -1,18 +1,18 @@
 # require 'byebug'
 
 module CrawlerCli
-  class Crawler
-    class << self
-      def call(urls, worker = CrawlerCli::Worker, parser = CrawlerCli::Parser)
-        jobs = urls.map { |url| job(parser, url) }
-        worker.call(jobs)
-      end
+  module Crawler
+    extend self
 
-      protected
+    def call(urls, worker = CrawlerCli::Worker, parser = CrawlerCli::Parser)
+      jobs = urls.map { |url| job(parser, url) }
+      worker.call(jobs)
+    end
 
-      def job(parser, url)
-        proc { parser.call(url) }
-      end
+    protected
+
+    def job(parser, url)
+      proc { parser.call(url) }
     end
   end
 end
